@@ -3,15 +3,37 @@ import { StyleSheet, View, Text, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { IconButton, TextInput } from "react-native-paper";
 import InventoryBag from '../../assets/svg/AddInventory.svg';
+import kioskApi from "../api/home";
 
 const {height, width} = Dimensions.get('window')
 const AddInventory = (props) => {
-    const [isEditable, setIsEditable] = useState(false);
-    var [product, setProduct] = useState({
+    const token = props.navigation.state.params.token;
+    const summary = props.navigation.state.params.summary;
+    var product = {
+        id: props.navigation.state.params.id,
         name: props.navigation.state.params.title,
         count: parseInt(props.navigation.state.params.count),
-    })
+    }
+    const [isEditable, setIsEditable] = useState(false);
     const [count, setCount] = useState(0);
+    const [errorMessage, setErrorMessage] = useState('')
+
+    const updateInventory = async (kioskname, token) => {
+        try {
+            const response = await kioskApi(token).patch(`/${kioskname}`,{
+                "product_id": product.id,
+                "Inventory_load_count": count
+            });
+            console.log(response)
+            if(response.status === 200){
+                props.navigation.navigate('Home')
+            } else{
+                console.log("Error: ", response)
+            }
+        } catch(err) {
+            setErrorMessage('Something went wrong!')
+        }
+    }
     return (
         <View>
             <View>
@@ -84,6 +106,7 @@ const AddInventory = (props) => {
                                             style={styles.submitButton}
                                             onPress={()=>{
                                                 product.count = product.count + count;
+                                                updateInventory(summary.kiosk_name,token)
                                                 setIsEditable(false)
                                             }}
                                         >
@@ -118,7 +141,7 @@ const AddInventory = (props) => {
 
 const styles = StyleSheet.create({
     screen: {
-        margin: 36
+        margin: 24
     },
     title: {
         flex: 1,
@@ -158,7 +181,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         height: height/11,
-        width: width/2,
+        width: width/1.5,
         elevation:10
     },
     submitButton: {
@@ -168,7 +191,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#000F4D',
         height: height/12,
-        width: width/5,
+        width: width/3.6,
         elevation:10
     },
     cancelButton:{
@@ -178,7 +201,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
         height: height/12,
-        width: width/5,
+        width: width/3.6,
         elevation:10
     }
 })

@@ -1,5 +1,5 @@
 import React, {  useState } from 'react';
-import {View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
+import {View, Text, StyleSheet, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -11,11 +11,13 @@ const SaleModal = ({ product, navigation, isVisible, setVisible }) => {
     const [quantity, setQuantity] = useState(1)
 
     return(
-        <View>
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Modal
                 animationType = 'fade'
                 isVisible = {isVisible}
-                backdropOpacity={0.3}
+                backdropOpacity={0.8}
+                onBackButtonPress={()=>{navigation.navigate('Home')}}
+                onDismiss={()=>{navigation.navigate('Home')}}
             >
                 <View style = {styles.modal}>  
                     <View style={{margin: 24, flex:1}}>
@@ -122,12 +124,11 @@ const styles = StyleSheet.create({
     modal:{
         backgroundColor: '#FFFFFF', 
         alignSelf: 'center',       
-        height: height / 1.7 ,  
+        height: height / 1.4 ,  
         width: width * 0.75,  
         borderRadius:10,  
         borderWidth: 1,  
-        borderColor: '#fff',    
-        marginTop: 60,  
+        borderColor: '#fff',      
     },
     text: {  
         color: '#B6B7B7',
@@ -139,7 +140,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         height: 60,
         width: 75,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        elevation: 15
     },
     operator: {
         color: '#FFFFFF',
@@ -157,18 +159,21 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 10
     },
     submitButton:{
+        marginBottom: 20,
         height: 65,
         width: width * 0.6,
         backgroundColor: '#6C971F',
         borderRadius: 10,
-        justifyContent:'center'
+        justifyContent:'center',
+        elevation:15
     },
     cancelButton:{
         height: 65,
         width: width * 0.6,
         backgroundColor: '#FFFFFF',
         borderRadius: 10,
-        justifyContent:'center'
+        justifyContent:'center',
+        elevation:15
     },
     cancelText:{
         color: '#4A4B4D',

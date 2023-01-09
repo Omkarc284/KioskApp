@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet, FlatList } from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import { TouchableOpacity } from 'react-native';
-import Coconut from '../../assets/svg/Coconut.svg'
+import Coconut from '../../assets/svg/Coconut.svg';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const InventoryCard = props => {
     
@@ -27,6 +28,9 @@ const InventoryCard = props => {
                             onPress={()=>{
                                 
                                 props.navigation.navigate('Add Inventory', {
+                                    id: props.id,
+                                    token: props.token,
+                                    summary: props.summary,
                                     title: props.title,
                                     count: props.count,
                                     navigation: props.navigation
@@ -34,9 +38,7 @@ const InventoryCard = props => {
                                 
                             }}
                         >
-                            <View style={{justifyContent: 'center', alignContent:'center'}}>
-                                <Text style={{fontSize: 42}}>{'>'}</Text>
-                            </View>
+                            <MaterialIcons style={{padding: 13,alignSelf:'center'}} name="navigate-next" size={42} color="black" />
                             
                         </TouchableOpacity>
                     </View>  
@@ -68,12 +70,7 @@ const styles = StyleSheet.create({
         marginRight: 54,
         height: 120,
         backgroundColor:'#FFFFFF',
-        borderRadius: 20,
-        shadowColor:'black',
-        shadowOpacity: 0.5,
-        shadowOffset: {width: 0, height: 9},
-        shadowRadius: 20,
-        elevation: 9,
+        borderRadius: 20
     },
     icon:{
         marginLeft: -40,
@@ -81,11 +78,6 @@ const styles = StyleSheet.create({
         width: 80,
         height: 80,
         borderRadius: 80 / 2,
-        shadowColor:'black',
-        shadowOpacity: 0.5,
-        shadowOffset: {width: 0, height: 10},
-        shadowRadius: 20,
-        elevation: 10,
         backgroundColor:'#FFFFFF'
     },
     next:{

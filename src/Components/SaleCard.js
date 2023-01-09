@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import {View, Text, StyleSheet, FlatList, Button } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {View, Text, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native';
-import Modal from 'react-native-modal';
+import { MaterialIcons } from '@expo/vector-icons';
 import Coconut from '../../assets/svg/Coconut.svg'
 import SaleModal from './SaleModal';
 
@@ -11,12 +11,16 @@ const SaleCard = props => {
         product_id: props.id,
         product_name: props.name,
         product_price: props.price,
-        count: props.count
+        count: props.count,
+        token: props.token,
+        summary: props.summary,
     });
-    
+    useEffect(()=> {
+        setIsVisible(false)
+    },[])
     return(
         <View style={styles.container}>
-            <SaleModal product={product} isVisible={isVisible} navigation={props.navigation} setVisible={()=>{setIsVisible(false)}} />
+            <SaleModal product={product} isVisible={isVisible} navigation={props.navigation} setVisible={()=>{setIsVisible(!isVisible)}} />
             <View style={styles.box}>
                 <View style={{flexDirection: 'row', flex: 1}}>
                     <View style={{justifyContent: 'center'}}>
@@ -31,16 +35,14 @@ const SaleCard = props => {
                         <Text style={styles.title}>{props.name}</Text>
                         <Text style={styles.subtitle}>{props.count} units</Text>
                     </View>
-                    <View style={{justifyContent: 'center'}}>
+                    <View style={{justifyContent: 'center', alignItems:'center'}}>
                         <TouchableOpacity 
                             style={styles.next}
                             onPress={()=>{
                                 setIsVisible(true)
                             }}
                         >
-                            <View style={{justifyContent: 'center', alignContent:'center'}}>
-                                <Text style={{fontSize: 42}}>{'>'}</Text>
-                            </View>
+                            <MaterialIcons style={{padding: 13,alignSelf:'center'}} name="navigate-next" size={42} color="black" />
                             
                         </TouchableOpacity>
                     </View>  
@@ -73,12 +75,7 @@ const styles = StyleSheet.create({
         marginRight: 54,
         height: 120,
         backgroundColor:'#FFFFFF',
-        borderRadius: 20,
-        shadowColor:'black',
-        shadowOpacity: 0.5,
-        shadowOffset: {width: 0, height: 9},
-        shadowRadius: 20,
-        elevation: 9,
+        borderRadius: 20
     },
     icon:{
         marginLeft: -40,
@@ -86,11 +83,6 @@ const styles = StyleSheet.create({
         width: 80,
         height: 80,
         borderRadius: 80 / 2,
-        shadowColor:'black',
-        shadowOpacity: 0.5,
-        shadowOffset: {width: 0, height: 10},
-        shadowRadius: 20,
-        elevation: 10,
         backgroundColor:'#FFFFFF'
     },
     next:{

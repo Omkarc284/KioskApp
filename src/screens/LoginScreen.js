@@ -1,16 +1,37 @@
-import React, { useState } from "react";
-import { Text, StyleSheet, View, ImageBackground } from "react-native";
+import React, { useContext, useState } from "react";
+import { Text, StyleSheet, View, ImageBackground, Dimensions } from "react-native";
 import { TextInput } from "react-native-paper";
-import { Ionicons } from '@expo/vector-icons'; 
+import { NavigationEvents } from "react-navigation";
 import { TouchableOpacity } from "react-native";
+import { Context as AuthContext } from "../context/AuthContext";
+
+const { height, width } = Dimensions.get('window');
 
 const LoginScreen = props => {
+    const { state, login, clearErrorMessage } = useContext(AuthContext)
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('')
     const [isPasswordSecure, setIsPasswordSecure] = useState(true);
 
+    // const loginApi = async () => {
+    //     const response = await login.post('/login', {
+    //         "username": username,
+    //         "password": password
+    //     });
+    //     // console.log(response.data)
+    //     if(response.status === 200){
+    //         props.navigation.navigate('Home',{
+    //             data: response.data
+    //         })
+    //     }else{
+    //         console.log("Error: ", response)
+    //     }
+        
+    // }
+
     return(
         <View style={{flex: 1}}>
+            <NavigationEvents onWillBlur={clearErrorMessage} />
             <View style={{flex: 1}}>
                 <View style={styles.pictureView}>
                     <ImageBackground source={require('../../assets/loginbg.jpg')} resizeMode="cover" style={styles.image}>
@@ -18,11 +39,16 @@ const LoginScreen = props => {
                     </ImageBackground>
                 </View>
                 <View style={styles.loginView}>
+                    
                     <Text style={styles.welcomeStyle}>Welcome</Text>
                     <Text style={styles.subtext}>Continue with your User ID and Password</Text>
-                    
-                    <View style={{margin: 36}} >
-                        <TextInput style={styles.textinput} underlineColor="transparent" placeholderTextColor={'#626262'} placeholder="Username"/>
+                    {
+                        state.errorMessage ? 
+                        <View>
+                            <Text style={styles.errorMessage}>{state.errorMessage}</Text>
+                        </View> : null}
+                    <View style={{margin: 18}} >
+                        <TextInput style={styles.textinput} underlineColor="transparent" placeholderTextColor={'#626262'} placeholder="Username" onChangeText={(value)=>setUsername(value)}/>
                         <TextInput 
                             style={styles.textinput} 
                             underlineColor="transparent" 
@@ -32,17 +58,18 @@ const LoginScreen = props => {
                             keyboardType='numeric'
                             right={
                                 <TextInput.Icon
-                                    style={{borderWidth: 1, borderColor: "#000F4D"}}
-                                  name={() => <Ionicons name={isPasswordSecure ? "eye-off" : "eye"} size={16 } />} // where <Icon /> is any component from vector-icons or anything else
-                                  onPress={() => { isPasswordSecure ? setIsPasswordSecure(false) : setIsPasswordSecure(true) }}
-
+                                    icon={ isPasswordSecure ? 'eye' : 'eye-off'} // where <Icon /> is any component from vector-icons or anything else
+                                    onPress={() => { isPasswordSecure ? setIsPasswordSecure(false) : setIsPasswordSecure(true) }}
+                                    color='black'
+                                    size={35}
                                 />
                             }
+                            onChangeText={(value)=>setPassword(value)}
                             
                         />
                         <TouchableOpacity 
                             style={styles.loginButton}
-                            onPress={() => props.navigation.navigate('Home')}
+                            onPress={async () => await login({username, password})}
                         >
                             <Text style={{ color: '#fff',fontSize: 20, fontWeight:'bold' }}>Login</Text>
                         </TouchableOpacity>
@@ -66,6 +93,7 @@ const styles = StyleSheet.create({
         paddingTop: 24
     },
     loginView: {
+        marginHorizontal: 28,
         flex: 0.6,
         zIndex: 1,
         alignItems: "center",
@@ -89,20 +117,27 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 16,
         height: 80,
-        width: 360,
+        width: 330,
         borderRadius: 20,
         borderTopStartRadius:20,
-        borderTopEndRadius:20
+        borderTopEndRadius:20,
+        elevation: 15
     },
     loginButton: {
-        marginTop: 32,
+        marginTop: 18,
         padding: 10,
         backgroundColor: '#000F4D',
         alignItems: 'center',
         justifyContent: 'center',
         height: 80,
-        width: 360,
+        width: 330,
         borderRadius: 40,
+        elevation: 15
+    },
+    errorMessage: {
+        fontSize: 20,
+        color: 'red',
+        fontWeight: '700'
     }
 });
 

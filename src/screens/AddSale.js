@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, Dimensions, ImageBackground, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, Text, Dimensions, TouchableOpacity, Image } from "react-native";
 import { RadioButton } from "react-native-paper";
 import Modal from 'react-native-modal';
 import upidetails from "../api/upidetails";

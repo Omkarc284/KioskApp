@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Text, StyleSheet, View, TouchableOpacity, ScrollView, Dimensions} from "react-native";
-import InventoryIcon from '../../assets/svg/InventoryIcon.svg';
-import Sale_icon from '../../assets/svg/Sale_Icon.svg';
-import Dashboard from '../../assets/svg/DashBoardIcon.svg';
 import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons'; 
 import { Context as AuthContext } from "../context/AuthContext";
 
 
@@ -68,7 +66,7 @@ const HomeScreen = (props) => {
               })}
             >
               <View >
-                <InventoryIcon/>
+                <MaterialIcons name="inventory" size={54} color="white" />
               </View>
               <View style={{flex:1, marginVertical: 15, justifyContent:'center'}}>
                 <Text style={styles.headingText}>Inventory</Text>
@@ -86,7 +84,7 @@ const HomeScreen = (props) => {
               })}  
             >
               <View >
-                <Sale_icon/>
+              <FontAwesome5 name="rupee-sign" size={54} color="white" />
               </View>
               <View style={{flex:1, marginVertical: 15, justifyContent:'center'}}>
                 <Text style={styles.headingText}>Sale</Text>
@@ -101,7 +99,7 @@ const HomeScreen = (props) => {
               onPress={()=> props.navigation.navigate('Dashboard')}
             >
               <View >
-                <Dashboard/>
+                <MaterialIcons name="dashboard-customize" size={54} color="white" />
               </View>
               <View style={{flex:1, marginVertical: 15, justifyContent:'center'}}>
                 <Text style={styles.headingText}>Dashboard</Text>

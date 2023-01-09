@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import { TouchableOpacity } from 'react-native';
-import Coconut from '../../assets/svg/Coconut.svg';
+import { Entypo } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
 
 const InventoryCard = props => {
@@ -13,7 +13,7 @@ const InventoryCard = props => {
                     <View style={{justifyContent: 'center'}}>
                         <View style={styles.icon}>
                             <View style={{padding: 12}}>
-                                <Coconut/>
+                            <Entypo name="shopping-bag" size={54} color="black" />
                             </View>
                             
                         </View>

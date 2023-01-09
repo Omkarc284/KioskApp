@@ -22,10 +22,16 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.omkarc284.newapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "368ebb5c-b8ec-459c-9bca-e32330a555a0"
+      }
     }
   }
 }

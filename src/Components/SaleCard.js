@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {View, Text, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import Coconut from '../../assets/svg/Coconut.svg'
+import { Entypo } from '@expo/vector-icons'; 
 import SaleModal from './SaleModal';
 
 const SaleCard = props => {
@@ -26,7 +26,7 @@ const SaleCard = props => {
                     <View style={{justifyContent: 'center'}}>
                         <View style={styles.icon}>
                             <View style={{padding: 12}}>
-                                <Coconut/>
+                            <Entypo name="shopping-bag" size={54} color="black" />
                             </View>
                             
                         </View>
